@@ -52,7 +52,7 @@ export class CPUResource {
         throw new Error("Invalid CPU unit. Must be 'm' for millicores or empty for cores");
       }
 
-      const value = parseFloat(num) * (multiplier || 1);
+      const value = Math.round(parseFloat(num) * (multiplier || 1));
       CPUResource.validateMillicores(value);
       this.value = value;
     }

@@ -67,6 +67,37 @@ describe('MemoryResource', () => {
       const mem = new MemoryResource('2Ti');
       expect(mem.toString()).toBe('2048Gi');
     });
+
+    it('should handle decimal Ti values', () => {
+      const mem = new MemoryResource('1.7Ti');
+      expect(mem.valueOf()).toBe(Math.round(1.7 * 1024 ** 4));
+    });
+
+    it('should handle decimal Gi values', () => {
+      const mem = new MemoryResource('1.5Gi');
+      expect(mem.toString()).toBe('1.5Gi');
+    });
+
+    it('should handle decimal Ki values', () => {
+      const mem = new MemoryResource('0.5Ki');
+      expect(mem.toString()).toBe('512B');
+    });
+
+    it('should handle decimal Mi values', () => {
+      const mem = new MemoryResource('2.5Mi');
+      expect(mem.toString()).toBe('2.5Mi');
+    });
+
+    it('should handle decimal Ti that produces fractional bytes', () => {
+      const mem = new MemoryResource('0.1Ti');
+      const bytes = mem.valueOf();
+      expect(Number.isInteger(bytes)).toBe(true);
+    });
+
+    it('should handle plain number without unit', () => {
+      const mem = new MemoryResource('1048576');
+      expect(mem.toString()).toBe('1Mi');
+    });
   });
 
   describe('static methods', () => {
@@ -240,6 +271,18 @@ describe('MemoryResource', () => {
       const mem1 = new MemoryResource('1Ti');
       const mem2 = new MemoryResource('1024Gi');
       expect(mem1.equals(mem2)).toBe(true);
+    });
+
+    it('should compare decimal Ti with equivalent Gi', () => {
+      const mem1 = new MemoryResource('0.5Ti');
+      const mem2 = new MemoryResource('512Gi');
+      expect(mem1.equals(mem2)).toBe(true);
+    });
+
+    it('should order decimal Ti values correctly', () => {
+      const mem1 = new MemoryResource('1.7Ti');
+      const mem2 = new MemoryResource('2Ti');
+      expect(mem1.isLessThan(mem2)).toBe(true);
     });
   });
 }); 

@@ -54,7 +54,7 @@ export class MemoryResource {
         throw new Error("Invalid memory unit. Must be one of: B, Ki, Mi, Gi, Ti");
       }
 
-      const value = parseFloat(num) * (multiplier || 1);
+      const value = Math.round(parseFloat(num) * (multiplier || 1));
       MemoryResource.validateBytes(value);
       this.value = value;
     }

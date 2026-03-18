@@ -52,6 +52,30 @@ describe('CPUResource', () => {
     it('should handle whitespace', () => {
       expect(() => new CPUResource(' 100m')).toThrow('Invalid CPU resource format');
     });
+
+    it('should handle decimal cores that cause floating-point issues', () => {
+      const cpu = new CPUResource('1.001');
+      expect(cpu.valueOf()).toBe(1001);
+      expect(cpu.toString()).toBe('1.001');
+    });
+
+    it('should handle 2.345 cores without floating-point error', () => {
+      const cpu = new CPUResource('2.345');
+      expect(cpu.valueOf()).toBe(2345);
+      expect(cpu.toString()).toBe('2.345');
+    });
+
+    it('should handle 0.001 cores (1 millicore)', () => {
+      const cpu = new CPUResource('0.001');
+      expect(cpu.valueOf()).toBe(1);
+      expect(cpu.toString()).toBe('1m');
+    });
+
+    it('should handle three-digit decimal cores', () => {
+      const cpu = new CPUResource('0.123');
+      expect(cpu.valueOf()).toBe(123);
+      expect(cpu.toString()).toBe('123m');
+    });
   });
 
   describe('static methods', () => {
@@ -186,6 +210,18 @@ describe('CPUResource', () => {
     it('should handle comparing with zero', () => {
       const cpu = new CPUResource('1');
       expect(cpu.isGreaterThan(CPUResource.zero())).toBe(true);
+    });
+
+    it('should compare decimal cores with equivalent millicores', () => {
+      const cpu1 = new CPUResource('1.001');
+      const cpu2 = new CPUResource('1001m');
+      expect(cpu1.equals(cpu2)).toBe(true);
+    });
+
+    it('should compare decimal cores correctly', () => {
+      const cpu1 = new CPUResource('2.345');
+      const cpu2 = new CPUResource('2.5');
+      expect(cpu1.isLessThan(cpu2)).toBe(true);
     });
   });
 }); 

@@ -14,7 +14,7 @@ A TypeScript library for performing arithmetic and comparison operations on Kube
 ## Installation
 
 ```bash
-npm install @kotaicode/k8s-resources
+npm install @icebergtsn/k8s-resources
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install @kotaicode/k8s-resources
 ### CPU Resources
 
 ```typescript
-import { CPUResource, MemoryResource } from '@kotaicode/k8s-resources';
+import { CPUResource, MemoryResource } from '@icebergtsn/k8s-resources';
 
 // Create CPU resources
 const cpu1 = new CPUResource('100m');  // 100 millicores
@@ -48,7 +48,7 @@ console.log(cpu2.toString());  // "1"
 ### Memory Resources
 
 ```typescript
-import { MemoryResource } from '@kotaicode/k8s-resources';
+import { MemoryResource } from '@icebergtsn/k8s-resources';
 
 // Create memory resources
 const mem1 = new MemoryResource('128Mi');  // 128 mebibytes
@@ -146,16 +146,83 @@ toString(): string
 - `Gi`: gibibytes (1024 MiB)
 - `Ti`: tebibytes (1024 GiB)
 
+## Precision notes
+
+- **CPU**: internally stored as whole millicores. Inputs like `"1.001"` are converted to `1001m` (rounded to the nearest millicore).
+- **Memory**: internally stored as whole bytes. Inputs like `"1.7Ti"` are converted to the nearest whole number of bytes (rounded).
+
 ## Error Handling
 
 The library throws errors in the following cases:
 - Invalid resource format
 - Negative values
 - Non-finite numbers
-- Fractional values (for CPU millicores and memory bytes)
+- Values that cannot be represented as whole millicores/bytes after rounding
 - Invalid units
 - Negative results from subtraction
 - Invalid multiplication factors
+
+## Publishing to npm
+
+This package is published as a scoped package: `@icebergtsn/k8s-resources`.
+
+### One-time setup
+
+```bash
+# Create / sign into an npm account first: https://www.npmjs.com/
+npm login
+
+# Verify you are logged in
+npm whoami
+```
+
+If you are publishing under an organization scope (like `@kotaicode/`), make sure your npm account has permission to publish to that scope, and that the package is public (this repo already sets `"publishConfig": { "access": "public" }`).
+
+### Before publishing
+
+```bash
+# Install deps
+npm install
+
+# Run tests
+npm test
+
+# Build (outputs to dist/)
+npm run build
+```
+
+### Version bump
+
+Use npm’s built-in versioning (it updates `package.json` and creates a git tag):
+
+```bash
+# Patch release: 0.1.4 -> 0.1.5
+npm version patch
+
+# Or:
+# npm version minor
+# npm version major
+```
+
+### Publish
+
+```bash
+# For scoped public packages:
+npm publish --access public
+```
+
+### After publishing
+
+```bash
+# Push the version commit and tag
+git push --follow-tags
+```
+
+### Verify on npm
+
+```bash
+npm view @icebergtsn/k8s-resources version
+```
 
 ## Development
 

@@ -1,5 +1,5 @@
 {
-  "name": "@kotaicode/k8s-resources",
+  "name": "@icebergtsn/k8s-resources",
   "version": "0.1.4",
   "description": "A TypeScript library for performing arithmetic and comparison operations on Kubernetes CPU and memory resources",
   "main": "dist/index.js",
@@ -23,16 +23,16 @@
     "arithmetic",
     "typescript"
   ],
-  "author": "Kotaicode",
+  "author": "icebergtsn",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kotaicode/k8s-resources-ts.git"
+    "url": "git+https://github.com/icebergtsn/k8s-resources-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/kotaicode/k8s-resources-ts/issues"
+    "url": "https://github.com/icebergtsn/k8s-resources-ts/issues"
   },
-  "homepage": "https://github.com/kotaicode/k8s-resources-ts#readme",
+  "homepage": "https://github.com/icebergtsn/k8s-resources-ts#readme",
   "publishConfig": {
     "access": "public"
   },

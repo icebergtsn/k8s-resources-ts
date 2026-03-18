@@ -1,6 +1,6 @@
 {
   "name": "@icebergtsn/k8s-resources",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A TypeScript library for performing arithmetic and comparison operations on Kubernetes CPU and memory resources",
   "main": "dist/index.js",
   "module": "dist/index.js",

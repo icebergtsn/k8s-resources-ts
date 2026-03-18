@@ -65,7 +65,7 @@ export class MemoryResource {
      * @returns A string representation in the most appropriate unit
      */
     private format(value: number): string {
-      const units = ["Gi", "Mi", "Ki"];
+      const units = ["Ti", "Gi", "Mi", "Ki"];
       for (const unit of units) {
         const unitValue = MemoryResource.UNITS[unit as keyof typeof MemoryResource.UNITS];
         if (value >= unitValue) {

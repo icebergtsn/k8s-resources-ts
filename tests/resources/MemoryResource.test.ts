@@ -65,7 +65,7 @@ describe('MemoryResource', () => {
 
     it('should handle very large values', () => {
       const mem = new MemoryResource('2Ti');
-      expect(mem.toString()).toBe('2048Gi');
+      expect(mem.toString()).toBe('2Ti');
     });
 
     it('should handle decimal Ti values', () => {
